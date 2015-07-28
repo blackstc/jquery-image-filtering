@@ -33,16 +33,35 @@ $(document).ready(function() {
   });
 
 // Iteration 1
-  $('.high').on('click', function() {
+  $('.high').on('click', function(event) {
+    event.preventDefault();
     $('.image-container').html($('.image-container').children().sort(function(a, b) {
       return b.dataset.price - a.dataset.price;
     }));
   });
 
-  $('.low').on('click', function() {
+  $('.low').on('click', function(event) {
+    event.preventDefault();
     $('.image-container').html($('.image-container').children().sort(function(a, b) {
       return a.dataset.price - b.dataset.price;
     }));
+  });
+
+// Iteration 2
+
+  //+$('input:checked').val() = number value of checked
+  $('input:checked').on('click', function() {
+    var $homeArray = $('.image-container').children();
+    var $checkedValue = +$('input:checked').val();
+    var $result = [];
+
+    for (var i = 0; i < $homeArray.length; i++) {
+      if (+$homeArray[i].dataset.price < $checkedValue) {
+        $result.push($homeArray[i]);
+      }
+    }
+    $('.image-container').html($result);
+
   });
 });
 
