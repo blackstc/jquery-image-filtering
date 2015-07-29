@@ -1,8 +1,8 @@
 // Iteration 0
 $(document).ready(function() {
   console.log("The document is ready!");
-  var homeValues = [1000000000, 50000, 20];
-  var homeStrings = ["$1,000,000,000", "$50,000", "$20"];
+  var homeValues = [1000000000, 350000, 20];
+  var homeStrings = ["$1,000,000,000", "$350,000", "$20"];
   var homeImages = ["img/whiteHouse.jpg", "img/newShack.jpg", "img/shack.jpg"];
 
   for (var i = 0; i < 3; i++) {
@@ -50,17 +50,24 @@ $(document).ready(function() {
 // Iteration 2
 
   //+$('input:checked').val() = number value of checked
-  $('input:checked').on('click', function() {
-    var $homeArray = $('.image-container').children();
-    var $checkedValue = +$('input:checked').val();
-    var $result = [];
+  $('input').change(function() {
+    var $originalContainer = $('.image-container');
 
-    for (var i = 0; i < $homeArray.length; i++) {
-      if (+$homeArray[i].dataset.price < $checkedValue) {
-        $result.push($homeArray[i]);
-      }
+    if ($(this).is(':checked')) {
+        var $checkedLow = Number($('input:checked').parent().prev().children().val());
+        var $homeArray = $('.image-container').children();
+        var $checkedValue = Number($('input:checked').val());
+        var $result;
+        $homeArray.hide();
+
+        for (var i = 0; i < $homeArray.length; i++) {
+          if (Number($homeArray[i].dataset.price) <= $checkedValue && Number($homeArray[i].dataset.price >= $checkedLow)) {
+            $result.push($homeArray[i]);
+          }
+        }
+    } else if ($('input').not(':checked')){
+      $('.image-container').show();
     }
-    $('.image-container').html($result);
 
   });
 });
