@@ -51,24 +51,26 @@ $(document).ready(function() {
 
   //+$('input:checked').val() = number value of checked
   $('input').change(function() {
-    var $originalContainer = $('.image-container');
+    var $article = $('article');
 
     if ($(this).is(':checked')) {
         var $checkedLow = Number($('input:checked').parent().prev().children().val());
-        var $homeArray = $('.image-container').children();
-        var $checkedValue = Number($('input:checked').val());
-        var $result;
-        $homeArray.hide();
+        var $checkedHigh = Number($('input:checked').val());
+        $article.hide();
 
-        for (var i = 0; i < $homeArray.length; i++) {
-          if (Number($homeArray[i].dataset.price) <= $checkedValue && Number($homeArray[i].dataset.price >= $checkedLow)) {
-            $result.push($homeArray[i]);
+        //if previous child's value is NaN, set the value to zero.
+        if (isNaN($checkedLow)) {
+          $checkedLow = 0;
+        }
+
+        for (var i = 0; i < $article.length; i++) {
+          if (Number($article[i].dataset.price) <= $checkedHigh && Number($article[i].dataset.price >= $checkedLow)) {
+            $article.eq(i).show();
           }
         }
     } else if ($('input').not(':checked')){
-      $('.image-container').show();
+        $article.show();
     }
-
   });
 });
 
