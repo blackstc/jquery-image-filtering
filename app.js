@@ -49,28 +49,52 @@ $(document).ready(function() {
 
 // Iteration 2
 
-  //+$('input:checked').val() = number value of checked
-  $('input').change(function() {
-    var $article = $('article');
+  // +$('input:checked').val() = number value of checked
+  // $('input').change(function() {
+  //   var $article = $('article');
 
-    if ($(this).is(':checked')) {
-        var $checkedLow = Number($('input:checked').parent().prev().children().val());
-        var $checkedHigh = Number($('input:checked').val());
-        $article.hide();
+  //   if ($(this).is(':checked')) {
+  //       var $checkedLow = Number($('input:checked').parent().prev().children().val());
+  //       var $checkedHigh = Number($('input:checked').val());
+  //       $article.hide();
 
-        //if previous child's value is NaN, set the value to zero.
-        if (isNaN($checkedLow)) {
-          $checkedLow = 0;
+  //       //if previous child's value is NaN, set the value to zero.
+  //       if (isNaN($checkedLow)) {
+  //         $checkedLow = 0;
+  //       }
+
+  //       for (var i = 0; i < $article.length; i++) {
+  //         if (Number($article[i].dataset.price) <= $checkedHigh && Number($article[i].dataset.price >= $checkedLow)) {
+  //           $article.eq(i).show();
+  //         }
+  //       }
+  //   } else if ($('input').not(':checked')){
+  //       $article.show();
+  //   }
+  // });
+
+//Iteration 3
+    $('.filters').find('input:checkbox').on("click", function () {
+        var $article = $('article');
+        var atLeastOneIsChecked = $('.filters :checkbox:checked').length;
+
+        if (atLeastOneIsChecked > 0) {
+          $article.hide();
+          $(".filters").find("input:checked").each(function () {
+            console.log($checkedLow);
+            var $checkedLow = Number($(this).parent().prev().children().val());
+
+            for (var i = 0; i < $article.length; i++) {
+              if (isNaN($checkedLow)) {
+                $checkedLow = 0;
+              }else if ($article[i].dataset.price <= +$(this).val() && $article[i].dataset.price >= $checkedLow) {
+                $article.eq(i).show();
+              }
+            }
+          });
+        } else {
+          $article.show();
         }
-
-        for (var i = 0; i < $article.length; i++) {
-          if (Number($article[i].dataset.price) <= $checkedHigh && Number($article[i].dataset.price >= $checkedLow)) {
-            $article.eq(i).show();
-          }
-        }
-    } else if ($('input').not(':checked')){
-        $article.show();
-    }
-  });
+    });
 });
 
