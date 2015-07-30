@@ -1,5 +1,10 @@
 // Iteration 0
 $(document).ready(function() {
+  // var numberOfItems = $('.image-container').children().size();
+  // for (var i = 3; i < numberOfItems; i++) {
+  //   $('article').eq(i).hide();
+  // }
+
   console.log("The document is ready!");
   var homeValues = [1000000000, 350000, 20];
   var homeStrings = ["$1,000,000,000", "$350,000", "$20"];
@@ -74,6 +79,12 @@ $(document).ready(function() {
   // });
 
 //Iteration 3
+  function createFilter(val, text) {
+    $('.filters').append("<label><input type='checkbox' value=" + val + ">" + text + "</label>");
+   }
+
+  createFilter(1000000000, '1$ Mil - 1$ Bil');
+
     $('.filters').find('input:checkbox').on("click", function () {
         var $article = $('article');
         var atLeastOneIsChecked = $('.filters :checkbox:checked').length;
